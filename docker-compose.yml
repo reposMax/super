@@ -3,3 +3,14 @@ services:
   php:
     build:
       context: ./docker/php
+    volumes:
+      - .:/app
+      - ./docker/php/php_config_dev.ini:/usr/local/etc/php/conf.d/php_config_dev.ini
+    networks:
+      - supermetrics_net
+    command: sh -c "cd /app && composer install && composer serve"
+    ports:
+      - 7777:7777
+
+networks:
+  supermetrics_net:
