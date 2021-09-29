@@ -34,6 +34,10 @@ class FictionalDriver implements SocialDriverInterface
      * @var CacheInterface
      */
     private $cache;
+    /**
+     * @var AuthService
+     */
+    private $authService;
 
     /**
      * FictionalSocialApiDriver constructor.
@@ -41,9 +45,11 @@ class FictionalDriver implements SocialDriverInterface
      * @param SocialClientInterface $client
      */
     public function __construct(
-        SocialClientInterface $client
+        SocialClientInterface $client,
+        AuthService $authService,
     ) {
         $this->client = $client;
+        $this->authService = $authService;
     }
 
     /**
@@ -121,11 +127,7 @@ class FictionalDriver implements SocialDriverInterface
      */
     protected function registerToken(): string
     {
-        //Todo: retrieve current user data from  an auth service stub
-        $userData = [
-            'email' => 'your@email.address',
-            'name'  => 'YourName',
-        ];
+        $userData = $this->authService->getUserData();
 
         $response = $this->client->authRequest(self::REGISTER_TOKEN_URI, $userData);
         $response = \GuzzleHttp\json_decode($response, true);
