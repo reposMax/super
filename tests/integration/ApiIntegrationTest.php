@@ -4,14 +4,10 @@ declare(strict_types = 1);
 
 namespace Tests\integration;
 
-use Dotenv\Dotenv;
 use PHPUnit\Framework\TestCase;
 use SocialPost\Dto\FetchParamsTo;
 use SocialPost\Dto\SocialPostTo;
 use SocialPost\Service\Factory\SocialPostServiceFactory;
-
-$dotEnv = Dotenv::createImmutable(__DIR__ . '/../../');
-$dotEnv->load();
 
 /**
  * Class ApiIntegrationTest

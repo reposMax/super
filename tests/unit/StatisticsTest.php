@@ -4,16 +4,12 @@ declare(strict_types = 1);
 
 namespace Tests\unit;
 
-use Dotenv\Dotenv;
 use PHPUnit\Framework\TestCase;
 use SocialPost\Hydrator\FictionalPostHydrator;
 use Statistics\Builder\ParamsBuilder;
 use Statistics\Dto\StatisticsTo;
 use Statistics\Enum\StatsEnum;
 use Statistics\Service\Factory\StatisticsServiceFactory;
-
-$dotEnv = Dotenv::createImmutable(__DIR__ . '/../../');
-$dotEnv->load();
 
 /**
  * Class StatisticsTest
