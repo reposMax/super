@@ -10,6 +10,7 @@ use Statistics\Builder\ParamsBuilder;
 use Statistics\Dto\StatisticsTo;
 use Statistics\Enum\StatsEnum;
 use Statistics\Service\Factory\StatisticsServiceFactory;
+use Traversable;
 
 /**
  * Class StatisticsTest
@@ -18,7 +19,7 @@ use Statistics\Service\Factory\StatisticsServiceFactory;
  */
 class StatisticsTest extends TestCase
 {
-    private $mockPosts;
+    private Traversable $mockPosts;
 
     protected function setUp(): void
     {
@@ -53,7 +54,7 @@ class StatisticsTest extends TestCase
         $this->assertEquals(1.0, $avgPostStat->getValue());
     }
 
-    private function calculateIndividualStat(\Traversable $posts, string $filterByStatName): StatisticsTo
+    private function calculateIndividualStat(Traversable $posts, string $filterByStatName): StatisticsTo
     {
         $statsService = StatisticsServiceFactory::create();
 
@@ -69,7 +70,7 @@ class StatisticsTest extends TestCase
         return $statsService->calculateStats($posts, $filteredParams);
     }
 
-    private function fetchPostsMock(): \Traversable
+    private function fetchPostsMock(): Traversable
     {
         $postsApiJsonResponse = file_get_contents(__DIR__ . '/../data/social-posts-response.json');
         $response = json_decode($postsApiJsonResponse, true);
