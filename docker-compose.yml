@@ -7,11 +7,8 @@ services:
       - .:/app
       - ./docker/php/php_config_dev.ini:/usr/local/etc/php/conf.d/php_config_dev.ini
       - ./docker/php/xdebug.ini:/usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
-    networks:
-      - supermetrics_net
     command: sh -c "cd /app && composer install && composer run-script serve --timeout=0"
     ports:
       - 7777:7777
-
-networks:
-  supermetrics_net:
+    environment:
+      PHP_IDE_CONFIG: "serverName=0.0.0.0"
