@@ -13,10 +13,6 @@ use Psr\SimpleCache\InvalidArgumentException;
  */
 class SocialClientCacheDecorator implements SocialClientInterface
 {
-
-    //TODO: set cache ttl via .env
-    private const CACHE_TTL = 60 * 60; //hour
-
     /**
      * @var SocialClientInterface
      */
@@ -33,6 +29,11 @@ class SocialClientCacheDecorator implements SocialClientInterface
     private $cachePrefix;
 
     /**
+     * @var int
+     */
+    private $cacheTtl;
+
+    /**
      * SocialDriverCacheDecorator constructor.
      *
      * @param SocialClientInterface $fallbackClient
@@ -42,11 +43,13 @@ class SocialClientCacheDecorator implements SocialClientInterface
     public function __construct(
         SocialClientInterface $fallbackClient,
         CacheInterface $cache,
-        string $cachePrefix
+        string $cachePrefix,
+        int $cacheTtl,
     ) {
         $this->fallbackClient = $fallbackClient;
         $this->cache          = $cache;
         $this->cachePrefix    = $cachePrefix;
+        $this->cacheTtl       = $cacheTtl;
     }
 
     /**
@@ -101,7 +104,7 @@ class SocialClientCacheDecorator implements SocialClientInterface
         if (null === $data) {
             $data = $callback();
 
-            $this->cache->set($key, $data, self::CACHE_TTL);
+            $this->cache->set($key, $data, $this->cacheTtl);
 
             return $data;
         }
